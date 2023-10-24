@@ -1,0 +1,60 @@
+{
+  "detainees": [
+    {
+      "id": 1,
+      "jailtime": "40",
+      "name": "Salvatore Lucania",
+      "crimes": ["murder", "theft", "extortion"],
+      "criminalLevel": 2,
+      "photo": "https://i.pinimg.com/564x/40/6f/77/406f777fffd3f84064b1b6c6f9e33eba.jpg"
+    },
+    {
+      "id": 2,
+      "jailtime": "10",
+      "name": "Butch Cassidy",
+      "crimes": ["rape", "arson"],
+      "criminalLevel": 1,
+      "photo": "https://buzzinglives.com/wp-content/uploads/2016/01/38c261569ffb8bcec4409a1776c3831f.jpeg"
+    },
+    {
+      "id": 3,
+      "jailtime": "32",
+      "name": "Liborio Bellomo",
+      "crimes": ["racketeering", "murder", "extortion"],
+      "criminalLevel": 2,
+      "photo": ""
+    },
+    {
+      "id": 4,
+      "jailtime": "75",
+      "name": "Alphonse Gabriel Capone",
+      "crimes": ["tax evasion", "murder", "extortion"],
+      "criminalLevel": 3,
+      "photo": ""
+    },
+    {
+      "id": 5,
+      "jailtime": "80",
+      "name": "Pablo Escobar",
+      "crimes": ["murder", "extortion", "drug trafficking"],
+      "criminalLevel": 3,
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Pablo_Escobar_Mug.jpg/266px-Pablo_Escobar_Mug.jpg"
+    },
+    {
+      "id": 6,
+      "jailtime": "2",
+      "name": "Jacob Johnson",
+      "crimes": ["theft"],
+      "criminalLevel": 1,
+      "photo": ""
+    },
+    {
+      "id": 7,
+      "jailtime": "3",
+      "name": "Manny el Peso",
+      "crimes": ["theft", "armed robbery"],
+      "criminalLevel": 1,
+      "photo": ""
+    }
+  ]
+}
