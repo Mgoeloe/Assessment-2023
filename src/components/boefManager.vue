@@ -1,31 +1,58 @@
 <script setup lang="ts">
-import axios from 'axios'
-import { VDataTable, VAutocomplete, VBtn } from 'vuetify/components'
-import { ref } from 'vue'
+import { VDataTable, VAutocomplete, VBtn, VRow } from 'vuetify/components'
+import { ref, unref } from 'vue'
+import { useDetaineeStore } from '@/stores/detaineeStore';
+import { storeToRefs } from 'pinia';
 
-const detaineeData = ref()
-const uniqueCrimes = ref()
+const detaineeStore = useDetaineeStore();
 
-const getAll = async () => {
-  try {
-  const result = await axios.get('http://localhost:3001/detainees')
-  detaineeData.value = result.data
-  console.log(result.data)
-  }catch (e) {
-    console.log(e);
-    alert(e + ',\n\n Please reload the page.')
-  }
-}
+const { getAll} = detaineeStore;
+
+const { detaineeData } = storeToRefs(detaineeStore)
+
+
+// const detaineeData = ref()
+// const detaineeData2 = new Set()
+// let detaineeData3 = []
+const uniqueCrimes = new Set()
+
+// const getAll = async () => {
+//   try {
+//   const result = await axios.get('http://localhost:3001/detainees')
+//   detaineeData.value = result.data
+//   detaineeData2.add(result.data)
+//   detaineeData3 = result.data
+//   console.log(result.data[1])
+//   }catch (e) {
+//     console.log(e);
+//     alert(e + ',\n\n Please reload the page.')
+//   }
+//   return result.data
+// }
 
 getAll()
 
 const getUniqueCrimes = async () => {
-  try {
+  const iteratedDetaineeData = detaineeData.value
+  // const itteratedCriminals = unref(detaineeData).values()
+  console.log('got here');
+  console.log(detaineeData);
+  
+  for (const criminal in detaineeData) {
+    console.log('hoi');
+    console.log(JSON.stringify(criminal));
     
-  }catch (e) {
-    console.log(e);
+    criminal.crimes.array.forEach(crime => {
+      uniqueCrimes.add(crime)
+    });
+    console.log(criminal);
+    
   }
+  // console.log(itteratedCriminals);
+
 }
+
+getUniqueCrimes()
 
 </script>
 
