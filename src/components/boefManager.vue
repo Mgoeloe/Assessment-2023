@@ -5,9 +5,9 @@ import { storeToRefs } from 'pinia'
 
 const detaineeStore = useDetaineeStore()
 
-const { getAll, updateUniqueCrimes } = detaineeStore
+const { getAll, updateUniqueCrimes, getCriminalsByCrime } = detaineeStore
 
-const { detaineeData, uniqueCrimes, uniqueCriminalLevels, selectedCriminalLevel, selectedCrime } =
+const { detaineeData, uniqueCrimes, uniqueCriminalLevels, selectedCriminalLevel, selectedCrime, filteredDetaineesByCrime } =
   storeToRefs(detaineeStore)
 
 const test = () => {
@@ -43,7 +43,7 @@ getAll()
             v-for="(item, index) in uniqueCrimes"
             :key="index"
             :value="item"
-            @click="selectedCrime = item"
+            @click="getCriminalsByCrime(item)"
           >
             <v-list-item-title>{{ item }}</v-list-item-title>
           </v-list-item>
@@ -51,7 +51,7 @@ getAll()
       </v-card>
     </v-col>
     <v-col cols="12">
-      <v-data-table :items="detaineeData"> </v-data-table>
+      <v-data-table :items="filteredDetaineesByCrime" v-show="filteredDetaineesByCrime"> </v-data-table>
     </v-col>
   </v-row>
 </template>

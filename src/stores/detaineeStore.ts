@@ -21,6 +21,7 @@ export const useDetaineeStore = defineStore('DetaineeStore', {
     uniqueCriminalLevels: [],
     selectedCriminalLevel: null,
     selectedCrime: null,
+    filteredDetaineesByCrime: undefined,
   }),
 
   getters: {},
@@ -61,19 +62,17 @@ export const useDetaineeStore = defineStore('DetaineeStore', {
         const criminalLevels = await this.detaineeData.map((criminals) => criminals.criminalLevel)
         const uniqueCriminalLevels = [...new Set(criminalLevels)]
         this.uniqueCriminalLevels = uniqueCriminalLevels
+    },
+
+    async getCriminalsByCrime(selectedCrime) {
+      const criminals = this.detaineeData;
+
+      const matchingCriminals = criminals.filter(criminal => {
+        return criminal.crimes.includes(selectedCrime);
+      });
+
+      this.filteredDetaineesByCrime = matchingCriminals;
     }
-
-    // async getUniqueCrimes() {
-    //   const allCrimes = await this.detaineeData.reduce((acc, criminal) => {
-    //     acc.push(...criminal.crimes)
-    //     return acc
-    //   }, [])
-
-    //   // Filter out duplicates by converting to Set and back to Array
-    //   const uniqueCrimes = [...new Set(allCrimes)]
-    //   this.uniqueCrimes = uniqueCrimes
-    // },
-
 
   }
 })
