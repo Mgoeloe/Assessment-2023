@@ -19,6 +19,8 @@ export const useDetaineeStore = defineStore('DetaineeStore', {
     detaineeData: [],
     uniqueCrimes: [],
     uniqueCriminalLevels: [],
+    selectedCriminalLevel: null,
+    selectedCrime: null,
   }),
 
   getters: {},
@@ -28,7 +30,7 @@ export const useDetaineeStore = defineStore('DetaineeStore', {
       try {
         const response = await axios.get('http://localhost:3001/detainees')
         this.detaineeData = response.data
-        this.getUniqueCrimes()
+        this.updateUniqueCrimes()
         this.getUniqueCriminalLevels()
         console.log(this.detaineeData)
       } catch (e) {
@@ -37,7 +39,7 @@ export const useDetaineeStore = defineStore('DetaineeStore', {
         alert(e + ',\n\n Please reload the page.')
       }
     },
-    async getUniqueCrimes(criminalLevel = null) {
+    async updateUniqueCrimes(criminalLevel = null) {
       let filteredCriminals = this.detaineeData;
 
       if (criminalLevel !== null) {

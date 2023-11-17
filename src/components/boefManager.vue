@@ -5,20 +5,18 @@ import { storeToRefs } from 'pinia'
 
 const detaineeStore = useDetaineeStore()
 
-const { getAll, getUniqueCrimes } = detaineeStore
+const { getAll, updateUniqueCrimes } = detaineeStore
 
-const { detaineeData, uniqueCrimes, uniqueCriminalLevels } = storeToRefs(detaineeStore)
-
+const { detaineeData, uniqueCrimes, uniqueCriminalLevels, selectedCriminalLevel, selectedCrime } =
+  storeToRefs(detaineeStore)
 
 const test = () => {
-  getUniqueCrimes(3)
+  updateUniqueCrimes(3)
   console.log(uniqueCrimes)
   console.log(uniqueCriminalLevels)
 }
 
 getAll()
-
-
 </script>
 
 <template>
@@ -29,19 +27,37 @@ getAll()
   <v-row>
     <v-col cols="12" md="6">
       <v-select
+        v-model="selectedCriminalLevel"
+        v-on:update:model-value="updateUniqueCrimes(selectedCriminalLevel)"
         label="Select criminal level"
         :items="uniqueCriminalLevels"
-        variant="outlined"
         clearable
+        clear-icon="mdi-close"
       ></v-select>
     </v-col>
     <v-col cols="12" md="6">
       <v-card class="mx-auto" max-width="300">
-        <v-list :items="uniqueCrimes"></v-list>
+        <v-list>
+          <v-list-item
+            v-model="selectedCrime"
+            v-for="(item, index) in uniqueCrimes"
+            :key="index"
+            :value="item"
+            @click="selectedCrime = item"
+          >
+            <v-list-item-title>{{ item }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
       </v-card>
     </v-col>
-    <v-col cols="12" md="6">
+    <v-col cols="12">
       <v-data-table :items="detaineeData"> </v-data-table>
     </v-col>
   </v-row>
 </template>
+
+<style scoped>
+.v-select .dropdown-toggle .clear {
+  z-index: 99;
+}
+</style>
