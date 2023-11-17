@@ -36,8 +36,7 @@ export const useDetaineeStore = defineStore('DetaineeStore', {
         console.log(this.detaineeData)
       } catch (e) {
         console.log(e)
-        // getAll()
-        alert(e + ',\n\n Please reload the page.')
+        alert('Something went wrong, please reload the page.')
       }
     },
     async updateUniqueCrimes(criminalLevel = null) {

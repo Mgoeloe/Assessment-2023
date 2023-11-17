@@ -7,24 +7,35 @@ const detaineeStore = useDetaineeStore()
 
 const { getAll, updateUniqueCrimes, getCriminalsByCrime } = detaineeStore
 
-const { detaineeData, uniqueCrimes, uniqueCriminalLevels, selectedCriminalLevel, selectedCrime, filteredDetaineesByCrime } =
-  storeToRefs(detaineeStore)
+const {
+  detaineeData,
+  uniqueCrimes,
+  uniqueCriminalLevels,
+  selectedCriminalLevel,
+  selectedCrime,
+  filteredDetaineesByCrime
+} = storeToRefs(detaineeStore)
 
 const test = () => {
   updateUniqueCrimes(3)
   console.log(uniqueCrimes)
   console.log(uniqueCriminalLevels)
 }
+const clearInput = () => {
+  selectedCriminalLevel.value = null
+  filteredDetaineesByCrime.value = undefined
+}
 
 getAll()
 </script>
 
 <template>
-  <row>
-    <v-btn @click="getAll" class="mb-2"> Reload </v-btn>
-    <v-btn @click="test" class="mb-2 ml-5"> Log </v-btn>
+  <row class="d-flex justify-space-evenly mt-10">
+    <v-btn variant="outlined" @click="clearInput"> Clear all input </v-btn>
+
+    <!-- <v-btn @click="test" class="mb-2 ml-5"> Log </v-btn> -->
   </row>
-  <v-row>
+  <v-row class="mt-6">
     <v-col cols="12" md="6">
       <v-select
         v-model="selectedCriminalLevel"
@@ -33,6 +44,7 @@ getAll()
         :items="uniqueCriminalLevels"
         clearable
         clear-icon="mdi-close"
+        variant="outlined"
       ></v-select>
     </v-col>
     <v-col cols="12" md="6">
@@ -51,7 +63,11 @@ getAll()
       </v-card>
     </v-col>
     <v-col cols="12">
-      <v-data-table :items="filteredDetaineesByCrime" v-show="filteredDetaineesByCrime"> </v-data-table>
+      <v-data-table :items="filteredDetaineesByCrime" v-show="filteredDetaineesByCrime">
+        <template v-slot:item.photo="{ item }">
+          <img :src="item.photo" style="width: 50px; height: 50px" v-show="item.photo"/>
+        </template>
+      </v-data-table>
     </v-col>
   </v-row>
 </template>
