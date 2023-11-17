@@ -17,7 +17,8 @@ export interface State {
 export const useDetaineeStore = defineStore('DetaineeStore', {
   state: () => ({
     detaineeData: [],
-    detaineeDataObject: { criminals: [] }
+    uniqueCrimes: [],
+    uniqueCriminalLevels: [],
   }),
 
   getters: {},
@@ -27,25 +28,29 @@ export const useDetaineeStore = defineStore('DetaineeStore', {
       try {
         const response = await axios.get('http://localhost:3001/detainees')
         this.detaineeData = response.data
+        this.getUniqueCrimes()
+        this.getUniqueCriminalLevels()
         console.log(this.detaineeData)
       } catch (e) {
         console.log(e)
-        getAll()
+        // getAll()
         alert(e + ',\n\n Please reload the page.')
       }
     },
-    getUniqueCrimes() {
-      const allCrimes = this.detaineeData.reduce((acc, criminal) => {
+    async getUniqueCrimes() {
+      const allCrimes = await this.detaineeData.reduce((acc, criminal) => {
         acc.push(...criminal.crimes)
         return acc
       }, [])
 
       // Filter out duplicates by converting to Set and back to Array
-      return [...new Set(allCrimes)]
+      const uniqueCrimes = [...new Set(allCrimes)]
+      this.uniqueCrimes = uniqueCrimes
     },
-    getUniqueCriminalLevels() {
-        const criminalLevels = this.detaineeData.map((criminals) => criminals.criminalLevel)
+    async getUniqueCriminalLevels() {
+        const criminalLevels = await this.detaineeData.map((criminals) => criminals.criminalLevel)
         const uniqueCriminalLevels = [...new Set(criminalLevels)]
+        this.uniqueCriminalLevels = uniqueCriminalLevels
     }
   }
 })

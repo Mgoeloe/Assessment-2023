@@ -5,22 +5,15 @@ import { storeToRefs } from 'pinia'
 
 const detaineeStore = useDetaineeStore()
 
-const { getAll, getUniqueCrimes, getUniqueCriminalLevels } = detaineeStore
+const { getAll } = detaineeStore
 
-const { detaineeData } = storeToRefs(detaineeStore)
-
-const uniqueCriminalLevels = getUniqueCriminalLevels();
-const uniqueCrimes = getUniqueCrimes();
-
-
+const { detaineeData, uniqueCrimes, uniqueCriminalLevels } = storeToRefs(detaineeStore)
 
 
 const test = () => {
   console.log(uniqueCrimes)
-  // console.log(uniqueCriminalLevels)
-
+  console.log(uniqueCriminalLevels)
 }
-
 
 getAll()
 
@@ -34,12 +27,17 @@ getAll()
   </row>
   <v-row>
     <v-col cols="12" md="6">
-      <v-autocomplete
+      <v-select
         label="Select criminal level"
-        :items="['1', '2', '3']"
+        :items="uniqueCriminalLevels"
         variant="outlined"
         clearable
-      ></v-autocomplete>
+      ></v-select>
+    </v-col>
+    <v-col cols="12" md="6">
+      <v-card class="mx-auto" max-width="300">
+        <v-list :items="uniqueCrimes"></v-list>
+      </v-card>
     </v-col>
     <v-col cols="12" md="6">
       <v-data-table :items="detaineeData"> </v-data-table>
