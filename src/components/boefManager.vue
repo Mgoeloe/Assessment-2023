@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDetaineeStore, type Detainee } from '@/stores/detaineeStore'
+import { useDetaineeStore } from '@/stores/detaineeStore'
 import { storeToRefs } from 'pinia'
 
 const detaineeStore = useDetaineeStore()
