@@ -5,12 +5,13 @@ import { storeToRefs } from 'pinia'
 
 const detaineeStore = useDetaineeStore()
 
-const { getAll } = detaineeStore
+const { getAll, getUniqueCrimes } = detaineeStore
 
 const { detaineeData, uniqueCrimes, uniqueCriminalLevels } = storeToRefs(detaineeStore)
 
 
 const test = () => {
+  getUniqueCrimes(3)
   console.log(uniqueCrimes)
   console.log(uniqueCriminalLevels)
 }

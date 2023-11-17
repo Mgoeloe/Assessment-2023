@@ -37,8 +37,16 @@ export const useDetaineeStore = defineStore('DetaineeStore', {
         alert(e + ',\n\n Please reload the page.')
       }
     },
-    async getUniqueCrimes() {
-      const allCrimes = await this.detaineeData.reduce((acc, criminal) => {
+    async getUniqueCrimes(criminalLevel = null) {
+      let filteredCriminals = this.detaineeData;
+
+      if (criminalLevel !== null) {
+        filteredCriminals = this.detaineeData.filter(
+          criminal => criminal.criminalLevel === criminalLevel
+        );
+      }
+
+      const allCrimes = await filteredCriminals.reduce((acc, criminal) => {
         acc.push(...criminal.crimes)
         return acc
       }, [])
@@ -52,5 +60,18 @@ export const useDetaineeStore = defineStore('DetaineeStore', {
         const uniqueCriminalLevels = [...new Set(criminalLevels)]
         this.uniqueCriminalLevels = uniqueCriminalLevels
     }
+
+    // async getUniqueCrimes() {
+    //   const allCrimes = await this.detaineeData.reduce((acc, criminal) => {
+    //     acc.push(...criminal.crimes)
+    //     return acc
+    //   }, [])
+
+    //   // Filter out duplicates by converting to Set and back to Array
+    //   const uniqueCrimes = [...new Set(allCrimes)]
+    //   this.uniqueCrimes = uniqueCrimes
+    // },
+
+
   }
 })
